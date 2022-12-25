@@ -11,7 +11,6 @@ router.post("/upload", uploadMiddleware.single("image"), (req, res) => {
     .toFormat(format, { quality: parseInt(quality, 10) })
     .toBuffer((err, buffer) => {
       if (err) {
-        console.error(err);
         res.sendStatus(500);
       } else {
         const dataURL = 'data:image/' + format + ';base64,' + buffer.toString('base64');
