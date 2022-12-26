@@ -1,4 +1,4 @@
-import { useState } from 'react'; 
+import { useState } from 'react';
 import axios from 'axios';
 import Head from 'next/head';
 import DonwloadButton from '../components/Download-Button';
@@ -17,7 +17,7 @@ export default function Home() {
     event.preventDefault()
     setLoading(true)
 
-    const dataByts = (image.size / (1024*1024)).toFixed(2);
+    const dataByts = (image.size / (1024 * 1024)).toFixed(2);
     console.log(dataByts + " MB");
 
     const formData = new FormData();
@@ -25,21 +25,22 @@ export default function Home() {
     formData.append('quality', quality);
     formData.append('format', format);
 
-    axios.post('http://localhost:3001/api/v1/upload', 
-    formData, 
-    { headers: 
-      { 'content-type': 'multipart/form-data' } 
-    })
-    .then(response => setResponse(response))
-    .catch(error => setError(error))
-    .finally(() => {
-      setLoading(false)
-    });
+    axios.post('http://localhost:3001/api/v1/upload',
+      formData,
+      {
+        headers:
+          { 'content-type': 'multipart/form-data' }
+      })
+      .then(response => setResponse(response))
+      .catch(error => setError(error))
+      .finally(() => {
+        setLoading(false)
+      });
   }
 
   const handleFileChange = (event) => {
     setImage(event.target.files[0])
-    const dataByts = (event.target.files[0].size / (1024*1024)).toFixed(2);
+    const dataByts = (event.target.files[0].size / (1024 * 1024)).toFixed(2);
     setImageSize(dataByts)
   }
 
@@ -58,13 +59,13 @@ export default function Home() {
               <div className='card'>
                 <form onSubmit={handleSubmit}>
                   {response ?
-                  <>
-                    <div className='minify-img'>
-                      <ResponseImage imgLink={response.data} width={300} height={300} />
-                      <DonwloadButton link={response.data} />
-                    </div>
-                  </>
-                  : ""}
+                    <>
+                      <div className='minify-img'>
+                        <ResponseImage imgLink={response.data} width={300} height={300} />
+                        <DonwloadButton link={response.data} />
+                      </div>
+                    </>
+                    : ""}
                   <div className='upload-file'>
                     <input type={"file"} accept="image/*" id="upload-file" hidden onChange={handleFileChange} />
                     <label className="btn-upload" htmlFor="upload-file"><span>Upload</span></label>
@@ -75,7 +76,7 @@ export default function Home() {
                           {imageSize > 10 ? "You cannot upload this photo" : imageSize + " MB"}
                           <br></br>
                         </>
-                       : ""}
+                        : ""}
                       You can upload images of maximum 10 MB.
                     </p>
                   </div>
