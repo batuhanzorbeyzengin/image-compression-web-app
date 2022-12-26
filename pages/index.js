@@ -60,7 +60,6 @@ export default function Home() {
                   <>
                     <div className='minify-img'>
                       <Image src={previewUrl.data} alt={"deneme"} width={300} height={300} layout="responsive"/> 
-                      
                         <a href={previewUrl.data} download>
                           Download
                         </a>
@@ -79,7 +78,6 @@ export default function Home() {
                           <br></br>
                         </>
                        : ""}
-                      
                       You can upload images of maximum 10 MB.
                     </p>
                   </div>
