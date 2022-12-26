@@ -1,14 +1,15 @@
 import { useState } from 'react'; 
 import axios from 'axios';
 import Head from 'next/head';
-import Image from 'next/image';
+import DonwloadButton from '../components/Download-Button';
+import ResponseImage from '../components/Response-Image';
 
 export default function Home() {
   const [image, setImage] = useState(null)
   const [imageSize, setImageSize] = useState(null)
   const [quality, setQuality] = useState(80)
   const [format, setFormat] = useState('png')
-  const [previewUrl, setPreviewUrl] = useState(null)
+  const [response, setResponse] = useState(null)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
 
@@ -29,7 +30,7 @@ export default function Home() {
     { headers: 
       { 'content-type': 'multipart/form-data' } 
     })
-    .then(response => setPreviewUrl(response))
+    .then(response => setResponse(response))
     .catch(error => setError(error))
     .finally(() => {
       setLoading(false)
@@ -56,13 +57,11 @@ export default function Home() {
             <div className='bg-card'>
               <div className='card'>
                 <form onSubmit={handleSubmit}>
-                  {previewUrl ?
+                  {response ?
                   <>
                     <div className='minify-img'>
-                      <Image src={previewUrl.data} alt={"deneme"} width={300} height={300} layout="responsive"/> 
-                        <a href={previewUrl.data} download>
-                          Download
-                        </a>
+                      <ResponseImage imgLink={response.data} width={300} height={300} />
+                      <DonwloadButton link={response.data} />
                     </div>
                   </>
                   : ""}
@@ -73,8 +72,7 @@ export default function Home() {
                       {image ?
                         <>
                           <b><u>image name: {image.name}</u></b>&nbsp;&nbsp;
-                          
-                          {imageSize > 10 ? "Bu fotoğrafı yükleyemezsin" : imageSize + " MB"}
+                          {imageSize > 10 ? "You cannot upload this photo" : imageSize + " MB"}
                           <br></br>
                         </>
                        : ""}
